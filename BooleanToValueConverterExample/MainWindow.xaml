@@ -1,0 +1,23 @@
+﻿<Window x:Class="BooleanToValueConverterExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:windows="clr-namespace:System.Windows;assembly=PresentationCore"
+        xmlns:local="clr-namespace:BooleanToValueConverterExample"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <local:DomainObject x:Key="myDomainObject" />
+        <local:MyBooleanToVisibilityValueConverter x:Key="myBooleanToVisibilityValueConverter" />
+    </Window.Resources>
+    <StackPanel>
+        <TextBlock Text="Text above" />
+        <TextBlock Text="This is some sample text..."
+                   Visibility="{Binding
+                        Source={StaticResource myDomainObject},
+                        Path=ShowText,
+                        FallbackValue={x:Static windows:Visibility.Visible},
+                        Converter={StaticResource myBooleanToVisibilityValueConverter},
+                        ConverterParameter={x:Static windows:Visibility.Collapsed}}" />
+        <TextBlock Text="Text below" />
+    </StackPanel>
+</Window>
