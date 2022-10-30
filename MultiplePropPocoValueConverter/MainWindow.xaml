@@ -1,0 +1,25 @@
+﻿<Window x:Class="MultiplePropPocoValueConverter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MultiplePropPocoValueConverter"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <local:DomainObject x:Key="myDomainObject" />
+        <local:QuarterBalanceToSingleBrushColor x:Key="myQuarterBalanceToColorConverter" />
+    </Window.Resources>
+    <StackPanel>
+        <TextBlock DataContext="{StaticResource myDomainObject}" Text="{Binding Balance}">
+            <TextBlock.Foreground>
+                <SolidColorBrush>
+                    <SolidColorBrush.Color>
+                        <!-- What is inside MultiBinding passes into values array of the Converter. -->
+                        <MultiBinding Converter="{StaticResource myQuarterBalanceToColorConverter}">
+                            <Binding Path="Month" />
+                            <Binding Path="Balance" />
+                        </MultiBinding>
+                    </SolidColorBrush.Color>
+                </SolidColorBrush>
+            </TextBlock.Foreground>
+        </TextBlock>
+    </StackPanel>
+</Window>
