@@ -9,7 +9,7 @@ namespace MultiplePropPocoValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length != 2)
+            if (values.Length != 2 || targetType != typeof(Color))
             {
                 return null;
             }
@@ -28,7 +28,7 @@ namespace MultiplePropPocoValueConverter
             }
 
             DateTime monthDateTime;
-            if (!DateTime.TryParseExact(month, "MMMM", System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat, System.Globalization.DateTimeStyles.AssumeUniversal, out monthDateTime))
+            if (!DateTime.TryParseExact(month, "MMMM", culture.DateTimeFormat, System.Globalization.DateTimeStyles.AssumeUniversal, out monthDateTime))
             {
                 return null;
             }
