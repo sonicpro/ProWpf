@@ -5,6 +5,10 @@ using System.Windows.Data;
 
 namespace BooleanToValueConverterExample
 {
+    /// <summary>
+    /// Is not used anymore.
+    /// The functionality has moved to DomainObject class.
+    /// </summary>
     internal class MyBooleanToVisibilityValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

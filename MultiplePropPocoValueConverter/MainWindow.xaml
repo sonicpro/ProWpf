@@ -5,26 +5,18 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
-        <ObjectDataProvider x:Key="myDomainObject" ObjectType="{x:Type local:DomainObject}">
-            <ObjectDataProvider.ConstructorParameters>
+        <ObjectDataProvider x:Key="myDomainObjectMethod" ObjectType="{x:Type local:DomainObject}" MethodName="ConvertQuarterAndBalanceToColor">
+            <ObjectDataProvider.MethodParameters>
                 <system:String>September</system:String>
                 <system:Decimal>-100</system:Decimal>
-            </ObjectDataProvider.ConstructorParameters>
+            </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <local:QuarterBalanceToSingleBrushColor x:Key="myQuarterBalanceToColorConverter" />
+        <!-- <local:QuarterBalanceToSingleBrushColor x:Key="myQuarterBalanceToColorConverter" /> -->
     </Window.Resources>
     <StackPanel>
-        <TextBlock DataContext="{StaticResource myDomainObject}" Text="{Binding Balance}">
+        <TextBlock Text="{Binding Source={StaticResource myDomainObjectMethod}, BindsDirectlyToSource=True, Path=MethodParameters[1]}">
             <TextBlock.Foreground>
-                <SolidColorBrush>
-                    <SolidColorBrush.Color>
-                        <!-- What is inside MultiBinding passes into values array of the Converter. -->
-                        <MultiBinding Converter="{StaticResource myQuarterBalanceToColorConverter}">
-                            <Binding Path="Month" />
-                            <Binding Path="Balance" />
-                        </MultiBinding>
-                    </SolidColorBrush.Color>
-                </SolidColorBrush>
+                <SolidColorBrush Color="{Binding Source={StaticResource myDomainObjectMethod}}" />
             </TextBlock.Foreground>
         </TextBlock>
     </StackPanel>
