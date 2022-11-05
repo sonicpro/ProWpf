@@ -28,7 +28,7 @@ namespace MultiplePropPocoValueConverter
             }
 
             DateTime monthDateTime;
-            if (!DateTime.TryParseExact(month, "MMMM", culture.DateTimeFormat, System.Globalization.DateTimeStyles.AssumeUniversal, out monthDateTime))
+            if (!DateTime.TryParseExact(month, "MMMM", culture.DateTimeFormat, DateTimeStyles.AssumeUniversal, out monthDateTime))
             {
                 return null;
             }

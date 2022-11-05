@@ -2,9 +2,15 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:MultiplePropPocoValueConverter"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
-        <local:DomainObject x:Key="myDomainObject" />
+        <ObjectDataProvider x:Key="myDomainObject" ObjectType="{x:Type local:DomainObject}">
+            <ObjectDataProvider.ConstructorParameters>
+                <system:String>September</system:String>
+                <system:Decimal>-100</system:Decimal>
+            </ObjectDataProvider.ConstructorParameters>
+        </ObjectDataProvider>
         <local:QuarterBalanceToSingleBrushColor x:Key="myQuarterBalanceToColorConverter" />
     </Window.Resources>
     <StackPanel>

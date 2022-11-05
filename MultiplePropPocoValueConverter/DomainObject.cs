@@ -1,11 +1,11 @@
 ﻿namespace MultiplePropPocoValueConverter
 {
-    internal class DomainObject
+    public class DomainObject
     {
-        public DomainObject()
+        public DomainObject(string month, decimal balance)
         {
-            Month = "April";
-            Balance = -1.0M;
+            Month = month;
+            Balance = balance;
         }
 
         public string Month { get; }
