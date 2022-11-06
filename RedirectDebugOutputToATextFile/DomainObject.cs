@@ -1,0 +1,6 @@
+﻿namespace RedirectDebugOutputToATextFile
+{
+    class DomainObject
+    {
+    }
+}
