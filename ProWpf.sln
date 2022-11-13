@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedirectDebugOutputToATextF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationTraceSourcesProperty", "PresentationTraceSourcesProperty\PresentationTraceSourcesProperty.csproj", "{9FAB11F4-75B4-45FB-8547-203CC577F088}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ButtonWithOwnControlTemplate", "ButtonWithOwnControlTemplate\ButtonWithOwnControlTemplate.csproj", "{FBB2D8BB-FA63-4BD6-9157-C0C808DE9B0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{9FAB11F4-75B4-45FB-8547-203CC577F088}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FAB11F4-75B4-45FB-8547-203CC577F088}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FAB11F4-75B4-45FB-8547-203CC577F088}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBB2D8BB-FA63-4BD6-9157-C0C808DE9B0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBB2D8BB-FA63-4BD6-9157-C0C808DE9B0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBB2D8BB-FA63-4BD6-9157-C0C808DE9B0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBB2D8BB-FA63-4BD6-9157-C0C808DE9B0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{A318DD61-46FE-4252-A19E-1A816EAE25EB} = {682955E9-E5E8-428E-BBB8-3E8863A29DF2}
 		{3351C9F8-5B3E-400F-B001-1D188A586856} = {682955E9-E5E8-428E-BBB8-3E8863A29DF2}
 		{9FAB11F4-75B4-45FB-8547-203CC577F088} = {682955E9-E5E8-428E-BBB8-3E8863A29DF2}
+		{FBB2D8BB-FA63-4BD6-9157-C0C808DE9B0E} = {682955E9-E5E8-428E-BBB8-3E8863A29DF2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16BC9E2C-8914-4FE0-9F16-5776ADD3204D}
