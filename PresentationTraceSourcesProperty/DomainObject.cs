@@ -1,0 +1,6 @@
+﻿namespace PresentationTraceSourcesProperty
+{
+    class DomainObject
+    {
+    }
+}
