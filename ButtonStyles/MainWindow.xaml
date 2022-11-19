@@ -8,6 +8,7 @@
     <Grid>
         <StackPanel>
             <StackPanel.Resources>
+                <!-- This style is applies to all the Button controls that are children of the current StackPanel. -->
                 <Style TargetType="Button">
                     <Setter Property="Template">
                         <Setter.Value>
@@ -22,7 +23,7 @@
                         </Setter.Value>
                     </Setter>
                 </Style>
-
+                <!-- This style is applies explicitly. -->
                 <Style x:Key="newButtonStyle" TargetType="Button">
                     <Setter Property="Template">
                         <Setter.Value>
