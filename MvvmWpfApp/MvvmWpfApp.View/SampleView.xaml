@@ -4,14 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MvvmWpfApp.View"
-        xmlns:viewModel="clr-namespace:MvvmWpfApp.ViewModel;assembly=MvvmWpfApp.ViewModel"
+        xmlns:viewModelNs="clr-namespace:MvvmWpfApp.ViewModel;assembly=MvvmWpfApp.ViewModel"
         mc:Ignorable="d"
         Title="SampleView" Height="100" Width="200">
     <Window.Resources>
-        <viewModel:SampleViewModel x:Key="sampleViewModel" />
+        <viewModelNs:SampleViewModel x:Key="sampleViewModel" />
     </Window.Resources>
     <StackPanel Orientation="Vertical">
-        <TextBlock Text="{Binding Source={StaticResource sampleViewModel}, Path=Result}" />
+        <TextBlock Text="{Binding Source={StaticResource sampleViewModel}, Path=Result, StringFormat='Square Root is {0}'}" />
         <StackPanel Orientation="Horizontal">
             <Label Content="Number:" />
             <TextBox Text="{Binding Source={StaticResource sampleViewModel}, Path=Number}" Width="50" />
