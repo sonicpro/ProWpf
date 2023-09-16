@@ -10,6 +10,11 @@ namespace ViewModel
 
         public RelayCommand(Action<object> executeHandler)
         {
+            if (executeHandler == null)
+            {
+                throw new ArgumentNullException(nameof(executeHandler));
+            }
+
             _executeHandler = executeHandler;
         }
 
