@@ -1,0 +1,30 @@
+﻿<Window x:Class="View.LogInWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+        Title="Demo Login" Height="150" Width="300">
+    <Window.Resources>
+        <viewModel:DomainObject x:Key="logInViewModel" />
+    </Window.Resources>
+    <Grid DataContext="{Binding Source={StaticResource logInViewModel}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Label Grid.Column="0" Grid.Row="0" Content="UserName:" />
+        <!-- Set update source trigger to update ICommand source instantly. -->
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Path=UserName,
+            UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Column="0" Grid.Row="1" Content="Password:" />
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Path=Password,
+            UpdateSourceTrigger=PropertyChanged}" />
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                Content="Log In" Command="{Binding LogInCommand}" />
+    </Grid>
+</Window>

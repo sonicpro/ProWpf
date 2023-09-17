@@ -3,14 +3,15 @@ using Model;
 
 namespace ViewModel
 {
-    class LogInViewModel
+    public class DomainObject
     {
         private RelayCommand _logInCommand;
         private LogInModel _loginModel;
 
-        public LogInViewModel()
+        public DomainObject()
         {
             _logInCommand = new RelayCommand(_ => AttemptLogin(), _ => CanAttemptLogin());
+            _loginModel = new LogInModel();
         }
 
         public string UserName { get; set; }
