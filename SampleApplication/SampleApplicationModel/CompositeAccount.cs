@@ -16,6 +16,8 @@ namespace SampleApplicationModel
 
         public List<IAccount> ChildAccounts { get; }
 
+        public IAccount Parent { get; internal set; }
+
         public void AddAccount(IAccount account)
         {
             ChildAccounts.Add(account);
