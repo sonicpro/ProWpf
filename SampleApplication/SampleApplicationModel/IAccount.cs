@@ -5,5 +5,7 @@
         string Name { get; }
 
         Money Balance { get; }
+
+        IAccount Parent { get; }
     }
 }

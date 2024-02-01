@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SampleApplicationModel;
@@ -12,12 +13,14 @@ namespace SampleApplicationModelTests
     public class CompositeAccountTests
     {
         private readonly CompositeAccount testAccount = new CompositeAccount();
-        private readonly IAccount childAccount = new CompositeAccount();
+        private readonly CompositeAccount childAccount = new CompositeAccount("John");
 
         [TestInitialize]
         public void OnInitialize()
         {
             var testAccountAccessor = new CompositeAccountAccessor(testAccount);
+            var childAccountAccessor = new CompositeAccountAccessor(childAccount);
+            childAccountAccessor.Parent = testAccount;
             testAccountAccessor.ChildAccounts = new List<IAccount> { childAccount };
         }
 
@@ -35,6 +38,23 @@ namespace SampleApplicationModelTests
         {
             testAccount.RemoveAccount(childAccount);
             Assert.AreEqual<int>(0, testAccount.ChildAccounts.Count);
+        }
+
+        [ExpectedException(typeof(InvalidOperationException))]
+        [TestMethod]
+        public void TestAccountCannotBeMovedWithoutRemovingFirst()
+        {
+            var newParent = new CompositeAccount();
+            var accountWithExistingParent = testAccount.ChildAccounts.First();
+            newParent.AddAccount(accountWithExistingParent);
+        }
+
+        [ExpectedException(typeof(InvalidOperationException))]
+        [TestMethod]
+        public void TestAccountNameChouldBeUniqueAmongTheSiblings()
+        {
+            var sibling = new CompositeAccount("John");
+            testAccount.AddAccount(sibling);
         }
     }
 }

@@ -16,8 +16,14 @@ namespace SampleApplicationModelTests
 
         internal List<IAccount> ChildAccounts
         {
-            get => (List<IAccount>) testedObject.GetProperty("ChildAccounts");
+            get => (List<IAccount>)testedObject.GetProperty("ChildAccounts");
             set => testedObject.SetField("<ChildAccounts>k__BackingField", value);
+        }
+
+        internal IAccount Parent
+        {
+            get => (IAccount)testedObject.GetProperty("Parent");
+            set => testedObject.SetField("<Parent>k__BackingField", value);
         }
     }
 }
