@@ -56,5 +56,21 @@ namespace SampleApplicationModelTests
             var sibling = new CompositeAccount("John");
             testAccount.AddAccount(sibling);
         }
+
+        [ExpectedException(typeof(InvalidOperationException))]
+        [TestMethod]
+        public void TestAccountGraphCannotBeDirectlyCyclical()
+        {
+            childAccount.AddAccount(testAccount);
+        }
+
+        [ExpectedException(typeof(InvalidOperationException))]
+        [TestMethod]
+        public void TestAccountGraphCannotBeIndirectlyCyclical()
+        {
+            var childOfAChild = new CompositeAccount();
+            childAccount.AddAccount(childOfAChild);
+            childOfAChild.AddAccount(testAccount);
+        }
     }
 }
