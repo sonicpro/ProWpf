@@ -42,7 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompositeAccount.cs" />
+    <Compile Include="Entry.cs" />
+    <Compile Include="EntryType.cs" />
     <Compile Include="IAccount.cs" />
+    <Compile Include="LeafAccount.cs" />
     <Compile Include="Money.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

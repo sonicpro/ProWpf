@@ -72,5 +72,29 @@ namespace SampleApplicationModelTests
             childAccount.AddAccount(childOfAChild);
             childOfAChild.AddAccount(testAccount);
         }
+
+        [TestMethod]
+        public void TestBalance()
+        {
+            var leafAccount1 = new LeafAccount("Alex", 10M);
+            Entry[] entries = new[]
+            {
+                new Entry(EntryType.Deposit, 15.25M, string.Empty),
+                new Entry(EntryType.Deposit, 16.87M, string.Empty),
+                new Entry(EntryType.Withdrawal, 5.12M, string.Empty),
+                new Entry(EntryType.Deposit, 8.7M, string.Empty)
+            };
+            foreach (var e in entries)
+            {
+                leafAccount1.AddEntry(e);
+            }
+
+            var leafAccount2 = new LeafAccount("Shean");
+            leafAccount2.AddEntry(new Entry(EntryType.Withdrawal, 5M, string.Empty));
+            testAccount.AddAccount(leafAccount1);
+            childAccount.AddAccount(leafAccount2);
+
+            Assert.AreEqual(40.7M, testAccount.Balance);
+        }
     }
 }

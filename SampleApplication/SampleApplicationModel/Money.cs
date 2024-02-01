@@ -34,6 +34,16 @@ namespace SampleApplicationModel
             return new Money(lhs.Amount + rhs.Amount);
         }
 
+        public static Money operator- (Money lhs, Money rhs)
+        {
+            if (lhs.Currency.LCID != rhs.Currency.LCID)
+            {
+                return Undefined;
+            }
+
+            return new Money(lhs.Amount - rhs.Amount);
+        }
+
         public static implicit operator Money(decimal amount)
         {
             return new Money(amount);
@@ -87,5 +97,7 @@ namespace SampleApplicationModel
         {
             return !(lhs > rhs);
         }
+
+        public static Money Zero => new Money(0m);
     }
 }

@@ -18,7 +18,19 @@ namespace SampleApplicationModel
 
         public string Name { get; }
 
-        public Money Balance { get; }
+        public Money Balance
+        {
+            get
+            {
+                var balance = Money.Zero;
+                foreach (var a in ChildAccounts)
+                {
+                    balance += a.Balance;
+                }
+
+                return balance;
+            }
+        }
 
         public List<IAccount> ChildAccounts { get; }
 
@@ -39,16 +51,24 @@ namespace SampleApplicationModel
             // This check is needed because other IAccount implementers might have readonly Parent property.
             if (!(account is CompositeAccount compositeAccount))
             {
-                throw new ArgumentException("The parameter is of unsupported type.", nameof(account));
-            }
+                if (!(account is LeafAccount leafAccount))
+                {
+                    throw new ArgumentException("The parameter is of unsupported type.", nameof(account));
+                }
 
-            if (compositeAccount.IsAncestor(this))
+                ChildAccounts.Add(account);
+                leafAccount.Parent = this;
+            }
+            else
             {
-                throw new InvalidOperationException("Account hierarchy cannot be cyclic.");
-            }
+                if (compositeAccount.IsAncestor(this))
+                {
+                    throw new InvalidOperationException("Account hierarchy cannot be cyclic.");
+                }
 
-            ChildAccounts.Add(account);
-            compositeAccount.Parent = this;
+                ChildAccounts.Add(account);
+                compositeAccount.Parent = this;
+            }
         }
 
         public void RemoveAccount(IAccount account)
