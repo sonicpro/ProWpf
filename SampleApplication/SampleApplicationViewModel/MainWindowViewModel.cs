@@ -11,6 +11,6 @@ namespace SampleApplicationViewModel
             this.person = person;
         }
 
-        public Money NetWorth => person.NetWorth;
+        public MoneyViewModel NetWorth => new MoneyViewModel(person.NetWorth);
     }
 }
