@@ -1,10 +1,21 @@
-﻿using SampleApplicationModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using SampleApplicationModel;
 
 namespace SampleApplicationViewModel
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private IPerson person;
+        private readonly IPerson person;
+        private ObservableCollection<AccountViewModel> accounts;
+        private readonly ObservableCollection<AccountViewModel> currentlyViewedAccounts =
+            new ObservableCollection<AccountViewModel>();
+        private AccountViewModel accountInFocus;
+        private RelayCommand openAccountDetailsCommand;
+        private RelayCommand closeAccountDetailsCommand;
 
         public MainWindowViewModel(IPerson person)
         {
@@ -12,5 +23,78 @@ namespace SampleApplicationViewModel
         }
 
         public MoneyViewModel NetWorth => new MoneyViewModel(person.NetWorth);
+
+        public ObservableCollection<AccountViewModel> Accounts
+        {
+            get
+            {
+                if (accounts == null)
+                {
+                    accounts = new ObservableCollection<AccountViewModel>(person.Accounts.Select(a => new AccountViewModel(a)));
+                }
+
+                return accounts;
+            }
+        }
+
+        public ObservableCollection<AccountViewModel> CurrentlyViewedAccounts => currentlyViewedAccounts;
+
+        public AccountViewModel AccountInFocus
+        {
+            get => accountInFocus;
+            set
+            {
+                if (accountInFocus != value)
+                {
+                    accountInFocus = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public ICommand OpenAccountDetailsCommand
+        {
+            get
+            {
+                if (openAccountDetailsCommand == null)
+                {
+                    openAccountDetailsCommand = new RelayCommand(account => OpenAccountDetails(account as AccountViewModel));
+                }
+
+                return openAccountDetailsCommand;
+            }
+        }
+
+        public ICommand CloseAccountDetailsCommand
+        {
+            get
+            {
+                if (closeAccountDetailsCommand == null)
+                {
+                    closeAccountDetailsCommand = new RelayCommand(account => CloseAccountDetails(account as AccountViewModel));
+                }
+
+                return closeAccountDetailsCommand;
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void OpenAccountDetails(AccountViewModel account)
+        {
+            currentlyViewedAccounts.Add(account);
+            AccountInFocus = account;
+        }
+
+        private void CloseAccountDetails(AccountViewModel account)
+        {
+            currentlyViewedAccounts.Remove(account);
+            AccountInFocus = currentlyViewedAccounts.FirstOrDefault();
+        }
     }
 }
