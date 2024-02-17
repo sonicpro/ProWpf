@@ -38,6 +38,8 @@ namespace SampleApplicationModel
             entries.Add(entry);
         }
 
+        public List<Entry> Entries => entries;
+
         public IAccount Parent { get; set; }
     }
 }

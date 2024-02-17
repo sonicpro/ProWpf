@@ -10,6 +10,7 @@ namespace SampleApplicationViewModel
     {
         private IAccount account;
         private ObservableCollection<AccountViewModel> childAccounts;
+        private ObservableCollection<EntryViewModel> entries;
 
         public AccountViewModel(IAccount account)
         {
@@ -39,5 +40,29 @@ namespace SampleApplicationViewModel
                 return returnValue;
             }
         }
+
+        public ObservableCollection<EntryViewModel> Entries
+        {
+            get
+            {
+                if (entries == null)
+                {
+                    entries = new ObservableCollection<EntryViewModel>();
+                    if (IsLeafAccount)
+                    {
+                        var runningBalance = Money.Zero;
+                        foreach (var entry in (account as LeafAccount).Entries)
+                        {
+                            runningBalance = entry.ApplyEntry(runningBalance);
+                            entries.Add(new EntryViewModel(runningBalance, entry));
+                        }
+                    }
+                }
+
+                return entries;
+            }
+        }
+
+        private bool IsLeafAccount => account is LeafAccount;
     }
 }
