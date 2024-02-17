@@ -22,6 +22,11 @@ namespace SampleApplicationViewModel
             this.person = person;
         }
 
+        public MainWindowViewModel()
+        {
+            person = new Person();
+        }
+
         public MoneyViewModel NetWorth => new MoneyViewModel(person.NetWorth);
 
         public ObservableCollection<AccountViewModel> Accounts
@@ -47,7 +52,7 @@ namespace SampleApplicationViewModel
                 if (accountInFocus != value)
                 {
                     accountInFocus = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged("AccountInFocus");
                 }
             }
         }
@@ -78,11 +83,35 @@ namespace SampleApplicationViewModel
             }
         }
 
+        public void AddAccount(IAccount account)
+        {
+            person.AddAccount(account);
+            var accountViewModel = new AccountViewModel(account);
+            accountViewModel.PropertyChanged += AccountViewModelPropertyChanged;
+            accounts.Add(accountViewModel);
+        }
+
+        internal void AccountViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("CurrentBalance", System.StringComparison.OrdinalIgnoreCase))
+            {
+                OnPropertyChanged("NetWorth");
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void OnAccountPropertyChanged(string propertyName)
+        {
+            if (propertyName.Equals("CurrentBalance", System.StringComparison.OrdinalIgnoreCase))
+            {
+                OnPropertyChanged("NetWorth");
+            }
         }
 
         private void OpenAccountDetails(AccountViewModel account)

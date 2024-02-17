@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using SampleApplicationModel;
@@ -6,7 +7,7 @@ using SampleApplicationModel;
 [assembly: InternalsVisibleTo("SampleApplicationViewModelTests")]
 namespace SampleApplicationViewModel
 {
-    public class AccountViewModel
+    public class AccountViewModel : INotifyPropertyChanged
     {
         private IAccount account;
         private ObservableCollection<AccountViewModel> childAccounts;
@@ -64,5 +65,22 @@ namespace SampleApplicationViewModel
         }
 
         private bool IsLeafAccount => account is LeafAccount;
+
+        internal void EntryChanged()
+        {
+            foreach (var entryViewModel in entries)
+            {
+                entryViewModel.BalanceChanged();
+            }
+
+            OnPropertyChanged("CurrentBalance");
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

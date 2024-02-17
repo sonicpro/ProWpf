@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountViewModel.cs" />
+    <Compile Include="CreateAccountViewModel.cs" />
     <Compile Include="EntryViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="MoneyViewModel.cs" />

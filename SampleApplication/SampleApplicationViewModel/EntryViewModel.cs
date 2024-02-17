@@ -1,8 +1,10 @@
-﻿using SampleApplicationModel;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using SampleApplicationModel;
 
 namespace SampleApplicationViewModel
 {
-    public class EntryViewModel
+    public class EntryViewModel : INotifyPropertyChanged
     {
         private Money oldBalance;
         private Entry entry;
@@ -48,6 +50,18 @@ namespace SampleApplicationViewModel
                 var balance = entry.ApplyEntry(oldBalance);
                 return new MoneyViewModel(balance);
             }
+        }
+
+        internal void BalanceChanged()
+        {
+            OnPropertyChanged("CurrentBalance");
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

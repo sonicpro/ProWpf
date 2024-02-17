@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SampleApplicationModel
 {
-    class Person : IPerson, IEnumerable<IAccount>
+    public class Person : IPerson, IEnumerable<IAccount>
     {
         private readonly ICollection<IAccount> accounts = new List<IAccount>();
 
