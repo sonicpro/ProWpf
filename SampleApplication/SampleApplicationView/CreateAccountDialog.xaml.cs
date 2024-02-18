@@ -10,25 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace SampleApplicationView
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for CreateAccountDialog.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CreateAccountDialog : Window
     {
-        public MainWindow()
+        public CreateAccountDialog()
         {
             InitializeComponent();
         }
 
-        private void ShowCreateAccountDialog(object sender, RoutedEventArgs e)
+        private void CloseDialog(object sender, RoutedEventArgs e)
         {
-            CreateAccountDialog createAccountDialog = new CreateAccountDialog();
-            createAccountDialog.ShowDialog();
+            Close();
         }
     }
 }

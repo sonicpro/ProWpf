@@ -27,6 +27,16 @@ namespace SampleApplicationViewModel
             person = new Person();
         }
 
+        /// <summary>
+        /// Returns the view model for CreateAccount dialog.
+        /// We decided to hide CreateAccountViewModel constructor from the view.
+        /// </summary>
+        /// <returns>The instance of a view model for CreateAccount dialog.</returns>
+        public CreateAccountViewModel CreateAccountViewModel()
+        {
+            return new CreateAccountViewModel(this);
+        }
+
         public MoneyViewModel NetWorth => new MoneyViewModel(person.NetWorth);
 
         public ObservableCollection<AccountViewModel> Accounts

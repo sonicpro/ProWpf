@@ -11,5 +11,8 @@
          <DataTemplate DataType="{x:Type viewModel:MoneyViewModel}">
              <Label Content="{Binding DisplayValue}" ContentStringFormat="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentStringFormat}" />
          </DataTemplate>
+
+         <!--ObjectDataProviders for instantiating CreateAccount dialog model. Bounds to the factory method in the main window view model.-->
+         <ObjectDataProvider x:Key="CreateAccountViewModel" ObjectInstance="{StaticResource MainWindowViewModel}" MethodName="CreateAccountViewModel" />
     </Application.Resources>
 </Application>
