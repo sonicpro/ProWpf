@@ -1,18 +1,38 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using SampleApplicationModel;
 
 namespace SampleApplicationViewModel
 {
     public class EntryViewModel : INotifyPropertyChanged
     {
-        private Money oldBalance;
+        private AccountViewModel accountViewModel;
         private Entry entry;
 
-        internal EntryViewModel(Money oldBalance, Entry entry)
+        public EntryViewModel()
         {
-            this.oldBalance = oldBalance;
+            entry = new Entry(EntryType.Withdrawal, Money.Zero, "Initial Balance");
+        }
+        internal EntryViewModel(AccountViewModel accountViewModel)
+        {
+            this.accountViewModel = accountViewModel;
+            this.entry = new Entry(EntryType.Withdrawal, Money.Zero, "Initial Balance");
+        }
+
+        internal EntryViewModel(AccountViewModel accountViewModel, Entry entry)
+        {
+            this.accountViewModel = accountViewModel;
             this.entry = entry;
+        }
+
+        public AccountViewModel AccountViewModel
+        {
+            set
+            {
+                if (value != null)
+                {
+                    accountViewModel = value;
+                }
+            }
         }
 
         public MoneyViewModel Withdrawal
@@ -26,6 +46,24 @@ namespace SampleApplicationViewModel
                 }
 
                 return new MoneyViewModel(amount);
+            }
+            set
+            {
+                if (entry.EntryType == EntryType.Withdrawal)
+                {
+                    if (entry.Amount != value.Money)
+                    {
+                        entry.Amount = value.Money;
+                    }
+                }
+                else
+                {
+                    entry = new Entry(EntryType.Withdrawal, value.Money, "Withdrawal");
+                    OnPropertyChanged("Deposit");
+                }
+
+                OnPropertyChanged("Withdrawal");
+                OnPropertyChanged("CurrentBalance");
             }
         }
 
@@ -41,15 +79,35 @@ namespace SampleApplicationViewModel
 
                 return new MoneyViewModel(amount);
             }
+            set
+            {
+                if (entry.EntryType == EntryType.Deposit)
+                {
+                    if (entry.Amount != value.Money)
+                    {
+                        entry.Amount = value.Money;
+                    }
+                }
+                else
+                {
+                    entry = new Entry(EntryType.Deposit, value.Money, "Deposit");
+                    OnPropertyChanged("Withdrawal");
+                }
+
+                OnPropertyChanged("Deposit");
+                OnPropertyChanged("CurrentBalance");
+            }
         }
 
-        public MoneyViewModel CurrentBalance
+        public MoneyViewModel CurrentBalance => accountViewModel.BalanceAt(this);
+
+        internal Entry Entry => entry;
+
+        private void Save()
         {
-            get
-            {
-                var balance = entry.ApplyEntry(oldBalance);
-                return new MoneyViewModel(balance);
-            }
+            (accountViewModel.Account as LeafAccount).AddEntry(entry);
+            accountViewModel.EntryChanged();
+            OnPropertyChanged("CurrentBalance");
         }
 
         internal void BalanceChanged()

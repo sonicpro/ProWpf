@@ -41,5 +41,20 @@ namespace SampleApplicationModel
         public List<Entry> Entries => entries;
 
         public IAccount Parent { get; set; }
+
+        public Money BalanceAt(Entry entry)
+        {
+            Money balanceAt = openingBalance;
+            foreach (var currentEntry in entries)
+            {
+                balanceAt = currentEntry.ApplyEntry(balanceAt);
+                if (currentEntry == entry)
+                {
+                    break;
+                }
+            }
+
+            return balanceAt;
+        }
     }
 }

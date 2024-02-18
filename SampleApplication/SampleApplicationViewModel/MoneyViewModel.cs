@@ -16,5 +16,7 @@ namespace SampleApplicationViewModel
         }
 
         public string DisplayValue => money.Amount.ToString("C", money.Currency);
+
+        internal Money Money => money;
     }
 }

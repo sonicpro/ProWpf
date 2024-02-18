@@ -11,7 +11,7 @@
 
         public EntryType EntryType { get; }
 
-        public Money Amount { get; }
+        public Money Amount { get; set; }
 
         public string Description { get; }
 

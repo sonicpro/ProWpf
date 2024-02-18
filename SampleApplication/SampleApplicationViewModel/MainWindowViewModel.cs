@@ -45,10 +45,24 @@ namespace SampleApplicationViewModel
             {
                 if (accounts == null)
                 {
-                    accounts = new ObservableCollection<AccountViewModel>(person.Accounts.Select(a => new AccountViewModel(a)));
+                    accounts = new ObservableCollection<AccountViewModel>();
+                    foreach (var account in person.Accounts)
+                    {
+                        var accountViewModel = new AccountViewModel(account);
+                        accountViewModel.PropertyChanged += AccountViewModel_PropertyChanged;
+                        accounts.Add(accountViewModel);
+                    }
                 }
 
                 return accounts;
+            }
+        }
+
+        private void AccountViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("CurrentBalance", System.StringComparison.OrdinalIgnoreCase))
+            {
+                OnPropertyChanged("NetWorth");
             }
         }
 
@@ -97,16 +111,8 @@ namespace SampleApplicationViewModel
         {
             person.AddAccount(account);
             var accountViewModel = new AccountViewModel(account);
-            accountViewModel.PropertyChanged += AccountViewModelPropertyChanged;
+            accountViewModel.PropertyChanged += AccountViewModel_PropertyChanged;
             accounts.Add(accountViewModel);
-        }
-
-        internal void AccountViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName.Equals("CurrentBalance", System.StringComparison.OrdinalIgnoreCase))
-            {
-                OnPropertyChanged("NetWorth");
-            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -114,14 +120,6 @@ namespace SampleApplicationViewModel
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void OnAccountPropertyChanged(string propertyName)
-        {
-            if (propertyName.Equals("CurrentBalance", System.StringComparison.OrdinalIgnoreCase))
-            {
-                OnPropertyChanged("NetWorth");
-            }
         }
 
         private void OpenAccountDetails(AccountViewModel account)
