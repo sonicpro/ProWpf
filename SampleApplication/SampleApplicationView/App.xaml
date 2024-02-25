@@ -8,8 +8,14 @@
          <viewModel:MainWindowViewModel x:Key="MainWindowViewModel" />
 
          <!--Whenever MoneyViewModel instance is bound inside ContentPresenter, it it displayed correctly.-->
+         <!-- Please note that this data templace is specifically crafted to pass the value to the content string specified in the bound control. -->
          <DataTemplate DataType="{x:Type viewModel:MoneyViewModel}">
              <Label Content="{Binding DisplayValue}" ContentStringFormat="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentStringFormat}" />
+         </DataTemplate>
+
+         <!-- Similar template for AccountModel. We do not have to reference any content format of the TemplatedParent here.-->
+         <DataTemplate DataType="{x:Type viewModel:AccountViewModel}">
+             <Label Content="{Binding Name}" />
          </DataTemplate>
 
          <!--ObjectDataProviders for instantiating CreateAccount dialog model. Bounds to the factory method in the main window view model.-->

@@ -70,6 +70,8 @@ namespace SampleApplicationViewModel
             return new MoneyViewModel((account as LeafAccount).BalanceAt(entryViewModel.Entry));
         }
 
+        public string Name => account.Name;
+
         internal IAccount Account => account;
 
         private void EntriesAddingNew(object sender, AddingNewEventArgs e)

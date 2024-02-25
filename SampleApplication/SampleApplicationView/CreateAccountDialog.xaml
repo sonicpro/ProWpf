@@ -14,7 +14,7 @@
         </StackPanel>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Account Name:" />
+                <Label Content="Account Name:" Width="102.666666666667" />
                 <TextBox Text="{Binding Name}" Width="150" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">

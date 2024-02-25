@@ -26,7 +26,10 @@
             </TreeView.ContextMenu>
             <TreeView.ItemTemplate>
                 <DataTemplate>
-                    <ContentPresenter Content="{Binding}" viewModel:ClickCommands.MouseEventParameter="{Binding}"/>
+                    <!-- Both MouseDoubleClickCommand and MouseEventParameter are attached properties registered to DependencyObject in ClickCommands.cs. -->
+                    <!-- See the explanation for this approach in Chapter 5 of Gary McLean Hall's book. -->
+                    <ContentPresenter Content="{Binding}" viewModel:ClickCommands.MouseEventParameter="{Binding}"
+                        viewModel:ClickCommands.MouseDoubleClickCommand="{Binding Source={StaticResource MainWindowViewModel}, Path=OpenAccountDetailsCommand}"/>
                 </DataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
