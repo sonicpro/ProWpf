@@ -15,7 +15,18 @@ namespace SampleApplicationViewModel
             this.money = money;
         }
 
-        public string DisplayValue => money.Amount.ToString("C", money.Currency);
+        public string DisplayValue
+        {
+            get
+            {
+                if (money == Money.Undefined)
+                {
+                    return null;
+                }
+
+                return money.Amount.ToString("C", money.Currency);
+            }
+        }
 
         internal Money Money => money;
 

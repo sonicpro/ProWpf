@@ -57,7 +57,7 @@ namespace SampleApplicationModel
             }
 
             var other = (Money) obj;
-            return (Currency == null && other.Currency == null || Currency.LCID == other.Currency.LCID) &&
+            return (Currency == null && other.Currency == null || Currency?.LCID == other.Currency?.LCID) &&
                    Amount == other.Amount;
         }
 
@@ -68,7 +68,7 @@ namespace SampleApplicationModel
 
         public static bool operator== (Money lhs, Money rhs)
         {
-            if (lhs.Currency.LCID != rhs.Currency.LCID)
+            if (lhs.Currency != null && rhs.Currency != null && lhs.Currency.LCID != rhs.Currency.LCID)
             {
                 throw new InvalidOperationException($"Cannot compare \"{lhs.Currency}\" money with " +
                                                     $"\"{rhs.Currency}\" money.");
