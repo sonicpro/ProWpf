@@ -13,7 +13,7 @@
 
         public Money Amount { get; set; }
 
-        public string Description { get; }
+        public string Description { get; set; }
 
         public Money ApplyEntry(Money previousBalance)
         {

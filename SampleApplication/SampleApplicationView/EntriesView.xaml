@@ -3,10 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SampleApplicationView"
+             xmlns:viewModel="clr-namespace:SampleApplicationViewModel;assembly=SampleApplicationViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <!-- Converts string money value into MoneyViewModel. -->
+        <viewModel:MoneyViewModelConverter x:Key="MoneyViewModelConverter" />
+    </UserControl.Resources>
+    <!-- InitializingNewItem attribute is set for just a stub for the future development. See backend code (F7). -->
+    <DataGrid ItemsSource="{Binding Entries}" AutoGenerateColumns="False" InitializingNewItem="DataGrid_InitializingNewItem">
+        <DataGrid.Columns>
+            <DataGridTextColumn Width="3*" Header="Description" Binding="{Binding Description}" />
+            <DataGridTextColumn Width="1*" Header="Deposit" Binding="{Binding Deposit, Converter={StaticResource MoneyViewModelConverter}}" />
+            <DataGridTextColumn Width="1*" Header="Withdrawal" Binding="{Binding Withdrawal, Converter={StaticResource MoneyViewModelConverter}}" />
+            <DataGridTextColumn Width="1*" Header="Balance" Binding="{Binding CurrentBalance}" IsReadOnly="True" />
+        </DataGrid.Columns>
+    </DataGrid>
 </UserControl>

@@ -50,6 +50,7 @@
     <Compile Include="EntryViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="MoneyViewModel.cs" />
+    <Compile Include="MoneyViewModelConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelayCommand.cs" />
   </ItemGroup>

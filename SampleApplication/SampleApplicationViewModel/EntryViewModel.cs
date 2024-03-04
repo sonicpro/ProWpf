@@ -3,19 +3,22 @@ using SampleApplicationModel;
 
 namespace SampleApplicationViewModel
 {
-    public class EntryViewModel : INotifyPropertyChanged
+    public class EntryViewModel : INotifyPropertyChanged, IEditableObject
     {
         private AccountViewModel accountViewModel;
         private Entry entry;
+        // Needed for IEditableObject implementation.
+        private Entry backupEntry;
+        private bool isInTransaction;
 
         public EntryViewModel()
         {
-            entry = new Entry(EntryType.Withdrawal, Money.Zero, "Initial Balance");
+            entry = new Entry(EntryType.Withdrawal, Money.Zero, "");
         }
         internal EntryViewModel(AccountViewModel accountViewModel)
         {
             this.accountViewModel = accountViewModel;
-            this.entry = new Entry(EntryType.Withdrawal, Money.Zero, "Initial Balance");
+            this.entry = new Entry(EntryType.Withdrawal, Money.Zero, "");
         }
 
         internal EntryViewModel(AccountViewModel accountViewModel, Entry entry)
@@ -24,6 +27,10 @@ namespace SampleApplicationViewModel
             this.entry = entry;
         }
 
+        /// <summary>
+        /// Not used in this sample. See explanation of its intended use
+        /// on the page 240 of Gary McLean Hall's book.
+        /// </summary>
         public AccountViewModel AccountViewModel
         {
             set
@@ -31,6 +38,22 @@ namespace SampleApplicationViewModel
                 if (value != null)
                 {
                     accountViewModel = value;
+                }
+            }
+        }
+
+        public string Description {
+            get
+            {
+                return entry.Description;
+            }
+
+            set
+            {
+                if (entry.Description != value)
+                {
+                    entry.Description = value;
+                    OnPropertyChanged("Description");
                 }
             }
         }
@@ -120,6 +143,33 @@ namespace SampleApplicationViewModel
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        void IEditableObject.BeginEdit()
+        {
+            if (!isInTransaction)
+            {
+                backupEntry = new Entry(entry.EntryType, entry.Amount, entry.Description);
+                isInTransaction = true;
+            }
+        }
+
+        void IEditableObject.CancelEdit()
+        {
+            if (isInTransaction)
+            {
+                entry = backupEntry;
+                isInTransaction = false;
+            }
+        }
+
+        void IEditableObject.EndEdit()
+        {
+            if (isInTransaction)
+            {
+                Save();
+                isInTransaction = false;
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SampleApplicationViewModel;
 
 namespace SampleApplicationView
 {
@@ -23,6 +24,16 @@ namespace SampleApplicationView
         public EntriesView()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Setting the new entry parent's account to the one in DataContext.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
+        {
+            //(e.NewItem as EntryViewModel).AccountViewModel = DataContext as AccountViewModel;
         }
     }
 }
